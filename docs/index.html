@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Template</title>
+        <title>Adversarial Tracking</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -30,8 +30,8 @@
 
                 <section data-auto-animate>
                     <span class="menu-title" style="display: none">Overview</span>
-                    <h3 class="r-fit-text">A Template Talk Slides with no Title</h3>
-                    <p class="name" style="font-size: 25px;">Han Wu and etc.</p>
+                    <h3 class="r-fit-text">Adversarial Tracking: Attacking 3D Multi-Object Tracking in Real Time</h3>
+                    <p class="name" style="font-size: 25px;">Han Wu, Dr. Johan Wahlström and Dr. Sareh Rowlands</p>
                     <div class="r-hstack">
                         <div>
                             <a href="https://wuhanstudio.cc">
@@ -42,19 +42,226 @@
                             </a>
                         </div>
                     </div>
-                    <p style="font-size: 22px;"><i class="fab fa-github"></i> &nbsp; <a href="https://github.com/wuhanstudio/talk-template">Source Code</a></p>
+                    <p style="font-size: 22px;"><i class="fab fa-github"></i> &nbsp; <a href="https://github.com/wuhanstudio/tracking-talk">Source Code</a></p>
 
                     <aside class="notes">
                     </aside>
                 </section>
 
                 <section>
+                    <h4 class="r-fit-text">Monocular 2D Object Detection and 3D Object Detection</h4>
+                    <div class="r-hstack"  style="font-size: 18px;">
+                        <div class="r-vstack">
+                            <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/2d_bbox.gif"/>
+                            <p>4 DoF - (x, y) (w, h)</p>
+                        </div>
+                        <div class="r-vstack">
+                            <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="140%">
+                            <p>MonoGRNet 2020 <a href="https://arxiv.org/pdf/1811.10247.pdf">[PDF]</a></p>
+                        </div>
+                        <div class="r-vstack">
+                            <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/3d_bbox_vehicle.gif"/>
+                            <p>7 DoF - (x, y, z) (w, h, l) and local yaw</p>
+                        </div>
+                    </div>
+                    <div class="r-vstack" style="font-size: 20px;">
+                        <p>We assume roll=0, pitch=0 for vehicles.</p>
+                        <ul>
+                            <br />
+                            <li class="fragment">Not easy to label 3D bounding boxes by human. (No training set)</li>
+                            <!-- <li class="fragment">How can we get global coordinates from local coordinates?</li> -->
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h1 class="r-fit-text">Problem 1: How can we generate 3D Bounding Boxes?</h1>
+                    <p style="font-size: 24px;">(Ground Truth / Training set)</p>
+                </section>
+
+                <section>
+                    <h4 class="r-fit-text">How can we generate 3D Bounding Boxes? (Ground Truth / Training set)</h4>
+                    <p style="font-size: 22px;">Method 1: Detouring - Extract rendering resources from Commercial Games (Direct3D 11)</p>
+                    <div style="font-size: 20px;">
+                        <div class="r-hstack">
+                            <div class="r-vstack">
+                                <img src="images/fsv.png" width="100%" style="margin-bottom: 0;"/>
+                                <p>FSV 2018 <a href="http://www.philkr.net/fsv/">[URL]</a></p>
+                            </div>
+                            <div class="r-vstack">
+                                <img src="images/GTA5.png" width="50%" style="margin-bottom: 0;"/>
+                                <p>GTA5 2016 <a href="https://download.visinf.tu-darmstadt.de/data/from_games/">[URL]</a></p>
+                            </div>
+                        </div>
+                        <p>To intercept the communication between the game and the graphics hardware.</p>
+                    </div>
+
+                </section>
+
+                <section>
+                    <h4 class="r-fit-text">How can we generate 3D Bounding Boxes? (Ground Truth / Training set)</h4>
+                    <div style="font-size: 20px;">
+                        <p style="font-size: 22px;">Method 2: Develop a Game for Simulation (Unity3D)</p>
+                        <div class="r-vstack">
+                            <img src="images/virtual-kitti.png" width="50%" style="margin-bottom: 0;"/>
+                            <p>Virtual KITTI 2016 (Unity3D) <a href="https://europe.naverlabs.com/blog/announcing-virtual-kitti-2/">[URL]</a></p>
+                        </div>
+                        <div class="r-vstacks">
+                            <img src="images/SYNTHIA.png" width="80%"  style="margin-bottom: 0;"/>
+                            <p>SYNTHIA 2016 (Unity3D) <a href="https://arxiv.org/pdf/1605.06457.pdf">[PDF]</a></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h4 class="r-fit-text">How can we generate 3D Bounding Boxes? (Ground Truth / Training set)</h4>
+                    <div style="font-size: 20px;">
+                        <p style="font-size: 22px;">Method 2: Develop a Game for Simulation (Unreal)</p>
+                        <div class="r-hstack"  style="font-size: 18px;">
+                            <div class="r-vstack">
+                                <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/2d_bbox.gif"/>
+                                <p>4 DoF - (x, y) (w, h)</p>
+                            </div>
+                            <div class="r-vstack">
+                                <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/3d_bbox_vehicle.gif"/>
+                                <p>7 DoF - (x, y, z) (w, h, l) and local yaw</p>
+                            </div>
+                        </div>
+                        <p>CARLA API Tutorial <a href="https://blog.wuhanstudio.uk/blog/carla-tutorial/">[Blog Post]</a></p>
+                    </div>
+                </section>
+
+                <section>
+                    <h1 class="r-fit-text">Problem 2: From 3D global coordinates to 2D image coordinates?</h1>
+                    <p style="font-size: 24px;">(Ground Truth / Training set)</p>
+                    <div class="r-hstack">
+                        <img src="images/carla-data.png"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="images/carla-correction.png"/>
+                    </div>
+                </section>
+
+                <section class="scrollable">
+                    <h4>Camera Projective Geometry</h4>
+                    <div style="font-size: 20px; text-align: left;">
+                        <p>Projection from world coordinates to image coordinates:</p>
+                        <p>$O_{image} = K[R|t] O_{world}$</p>
+                        <p>$O_{image}^{'} = M^{'}K[R|t] O_{world}$</p> 
+                        <p>where $M^{'} = \begin{bmatrix}
+                            1 & 0 & x_{v}\\ 
+                            0 & 1 & y_{v}\\ 
+                            0 & 0 & 1\\
+                            \end{bmatrix}
+                            \begin{bmatrix}
+                            cos(\pi) & 0 & 0\\ 
+                            0 & cos(\pi) & 0\\ 
+                            0 & 0 & 1\\
+                            \end{bmatrix}
+                            \begin{bmatrix}
+                            1 & 0 & -x_{v}\\ 
+                            0 & 1 & -y_{v}\\ 
+                            0 & 0 & 1\\
+                            \end{bmatrix}
+                            = \begin{bmatrix}
+                            -1 & 0 & 2x_{v}\\ 
+                            0 & -1 & 2y_{v}\\ 
+                            0 & 0 & 1\\
+                            \end{bmatrix}$</p>
+
+                        <br />
+                        
+                        <div class="fragment">
+                            <p>For a camera at (x, y, z) that produces a (w, h) camera image:</p>
+                            <ul>
+                                <li>Intrinsic Matrix: $K 
+                                    = \begin{bmatrix}
+                                    f & 0 & \frac{w}{2}\\ 
+                                    0 & f & \frac{h}{2} \\ 
+                                    0 & 0 & 1
+                                    \end{bmatrix}
+                                    $ where $f = \frac{w}{2.0 * tan(fov\ *\frac{\pi}{360})}$</li>
+                                    <br />
+                                    <li>
+                                        Extrinsic Matrix: $[R | t]
+                                        = \begin{bmatrix}
+                                    cos(k) & -sin(k) & 0 & x\\ 
+                                    sin(k) & cos(k) & 0 & y\\ 
+                                    0 & 0 & 1 & z \\
+                                    0 & 0 & 0 & 1 \\
+                                    \end{bmatrix}^{-1}$
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <br />
+                        <div class="fragment">
+
+                            <p>If the vanishing point is at the center of the image $(x_v, y_v) = (\frac{w}{2}, \frac{h}{2})$:</p>
+                            <p>$O_{image}^{'} = M^{'}K[R|t] O_{world}\\
+                                = \begin{bmatrix}
+                                -1 & 0 & w\\ 
+                                0 & -1 & h\\ 
+                                0 & 0 & 1\\
+                                \end{bmatrix}
+                                K\ [R|t] \\ 
+                                = \begin{bmatrix}
+                                -1 & 0 & w\\ 
+                                0 & -1 & h\\ 
+                                0 & 0 & 1\\
+                                \end{bmatrix}
+                                \begin{bmatrix}
+                                f & 0 & \frac{w}{2}\\ 
+                                0 & f & \frac{h}{2} \\ 
+                                0 & 0 & 1
+                                \end{bmatrix} [R|t] \\
+                                = \begin{bmatrix}
+                                -f & 0 & \frac{w}{2}\\ 
+                                0 & -f & \frac{h}{2} \\ 
+                                0 & 0 & 1
+                                \end{bmatrix} [R|t] \\ 
+                                = K^{'}\ [R|t]$</p> 
+                            </div>
+                        </div>
+                        </section>
+
+                <section>
+                    <h1 class="r-fit-text">Problem 3: From 2D Bounding Boxes to 3D Bounding Boxes</h1>
+                    <p style="font-size: 24px;">(2D Bounding Boxes --&gt; 3D Bounding Boxes --&gt; 3D Global Coordinates)</p>
+                </section>
+
+                <section>
+                    <h5>From 2D Bounding Boxes to 3D Bounding Boxes</h5>
+                    <div class="r-hstack"  style="font-size: 18px;">
+                        <div class="r-vstack">
+                            <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="80%">
+                            <p>MonoGRNet 2020 <a href="https://arxiv.org/pdf/1811.10247.pdf">[PDF]</a></p>
+                        </div>
+                    </div>
+                    <h5>From 3D Bounding Boxes to 3D Global Coordinates</h5>
+                    <div class="r-vstack" style="font-size: 20px;">
+                        <p>$O_{image}^{'} = M^{'}K[R|t] O_{world} = [u\ v\ z]^{T} = [\frac{u}{z}\ \frac{v}{z}\ 1]^{T} = [x\ y\ 1] \neq [u\ v\ z]^{T}$</p> 
+                        <p>The depth information is missing!</p> 
+                    </div>
+                </section>
+
+                <section>
+                    <h1 class="r-fit-text">Problem 4: How can we do multi-object tracking?</h1>
+                    <p style="font-size: 24px;">(Monocular 3D Object Tracking)</p>
+                </section>
+
+                <section>
+                    <h1 class="r-fit-text">Problem 5: How can we generate UAPs?</h1>
+                    <p style="font-size: 24px;">(Adversarial Attacks)</p>
+                </section>
+
+
+                <section>
                     <h2>Thanks</h2>
                     <div class="r-vstack">
-                        <p><a href="https://temp.wuhanstudio.uk/">https://temp.wuhanstudio.uk</a></p>
+                        <p><a href="https://tracking.wuhanstudio.uk/">https://tracking.wuhanstudio.uk</a></p>
                     </div>
                     <img src="images/qrcode.png" width="25%" />
-                    <p style="font-size: 22px;"><i class="fab fa-github"></i> &nbsp; <a href="https://github.com/wuhanstudio/talk-template">Source Code</a></p>
+                    <p style="font-size: 22px;"><i class="fab fa-github"></i> &nbsp; <a href="https://github.com/wuhanstudio/tracking-talk">Source Code</a></p>
                 </section>
 
             </div>
