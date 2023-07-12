@@ -146,8 +146,11 @@
                     <div style="font-size: 20px; text-align: left;">
                         <p>Projection from world coordinates to image coordinates:</p>
                         <p>$O_{image} = K[R|t] O_{world}$</p>
-                        <p>$O_{image}^{'} = M^{'}K[R|t] O_{world}$</p> 
-                        <p>where $M^{'} = \begin{bmatrix}
+                        <br />
+                        <p style="color: gray;">$O_{image}^{'} = M^{'}K[R|t] O_{world}$</p> 
+                        <p>$O_{image}^{'} = KM^{'}[R|t] O_{world}$</p> 
+                        <br />
+                        <p style="color: gray;">where $M^{'} = \begin{bmatrix}
                             1 & 0 & x_{v}\\ 
                             0 & 1 & y_{v}\\ 
                             0 & 0 & 1\\
@@ -167,7 +170,18 @@
                             0 & -1 & 2y_{v}\\ 
                             0 & 0 & 1\\
                             \end{bmatrix}$</p>
-
+                            <p>where $M^{'} = 
+                                \begin{bmatrix}
+                                cos(\pi) & -sin(\pi) & 0\\ 
+                                sin(\pi) & cos(\pi) & 0\\ 
+                                0 & 0 & 1\\
+                                \end{bmatrix}
+                                = \begin{bmatrix}
+                                -1 & 0 & 0\\ 
+                                0 & -1 & 0\\ 
+                                0 & 0 & 1\\
+                                \end{bmatrix}$</p>
+    
                         <br />
                         
                         <div class="fragment">
@@ -196,17 +210,24 @@
                         <br />
                         <div class="fragment">
 
-                            <p>If the vanishing point is at the center of the image $(x_v, y_v) = (\frac{w}{2}, \frac{h}{2}) [Page 7](https://www.ri.cmu.edu/pub_files/2014/5/tech-report-ri-tr-14-07.pdf)$:</p>
-                            <p>$O_{image}^{'} = M^{'}K[R|t] O_{world}\\
-                                = \begin{bmatrix}
-                                -1 & 0 & w\\ 
-                                0 & -1 & h\\ 
+                            <p>The vanishing point is at the center of the image if the road plane is flat and perpendicular to an image plane. $(x_v, y_v) = (\frac{w}{2}, \frac{h}{2})$ <a href="https://www.ri.cmu.edu/pub_files/2014/5/tech-report-ri-tr-14-07.pdf">(Page 7)</a>:</p>
+                            <p>Horizontal Vanishing Point (roll $\phi=0$, pitch $\theta=0$, yaw $\psi \neq 0$):</p> 
+                            <p>$\begin{aligned} vp_h^*(\phi, \theta, \psi) &= [cos(\phi)sin(\psi)-sin(\phi)sin(\theta)cos(\psi), -(sin(\phi)sin(\psi)+cos(\phi)sin(\theta)cos(\psi)), cos(\theta)cos(\psi)]^T\\
+                                &= [cos(0)sin(\psi)-sin(0)sin(0)cos(\psi), -(sin(0)sin(\psi)+cos(0)sin(0)cos(\psi)), cos(0)cos(\psi)]^T\\
+                                &= [sin(\psi), 0, cos(\psi)]^T\\
+                                &= [tan(\psi), 0, 1]^T
+                                \end{aligned}$</p>
+                            <br />
+                            <p style="color: grey;">$\begin{aligned}O_{image}^{'} &= M^{'}K[R|t] O_{world}\\
+                                &= \begin{bmatrix}
+                                -1 & 0 & 2x_v\\ 
+                                0 & -1 & 2y_v\\ 
                                 0 & 0 & 1\\
                                 \end{bmatrix}
                                 K\ [R|t] \\ 
-                                = \begin{bmatrix}
-                                -1 & 0 & w\\ 
-                                0 & -1 & h\\ 
+                                &= \begin{bmatrix}
+                                -1 & 0 & 2x_v\\ 
+                                0 & -1 & 2y_v\\ 
                                 0 & 0 & 1\\
                                 \end{bmatrix}
                                 \begin{bmatrix}
@@ -214,12 +235,38 @@
                                 0 & f & \frac{h}{2} \\ 
                                 0 & 0 & 1
                                 \end{bmatrix} [R|t] \\
-                                = \begin{bmatrix}
+                                &= \begin{bmatrix}
+                                -f & 0 & 2x_v-\frac{w}{2}\\ 
+                                0 & -f & 2y_v-\frac{h}{2} \\ 
+                                0 & 0 & 1
+                                \end{bmatrix} [R|t] \\ 
+                                &= K^{'}\ [R|t]\end{aligned}$
+                            </p> 
+                            <p>$\begin{aligned}O_{image}^{'} &= KM^{'}[R|t] O_{world}\\
+                                &=
+                                K\begin{bmatrix}
+                                -1 & 0 & 0\\ 
+                                0 & -1 & 0\\ 
+                                0 & 0 & 1\\
+                                \end{bmatrix}\ [R|t] \\ 
+                                &= 
+                                \begin{bmatrix}
+                                f & 0 & \frac{w}{2}\\ 
+                                0 & f & \frac{h}{2} \\ 
+                                0 & 0 & 1
+                                \end{bmatrix}
+                                \begin{bmatrix}
+                                -1 & 0 & 0\\ 
+                                0 & -1 & 0\\ 
+                                0 & 0 & 1\\
+                                \end{bmatrix} [R|t] \\
+                                &= \begin{bmatrix}
                                 -f & 0 & \frac{w}{2}\\ 
                                 0 & -f & \frac{h}{2} \\ 
                                 0 & 0 & 1
                                 \end{bmatrix} [R|t] \\ 
-                                = K^{'}\ [R|t]$</p> 
+                                &= K^{'}\ [R|t]\end{aligned}$
+                            </p> 
                             </div>
                         </div>
                         </section>
