@@ -40,7 +40,6 @@
                               <img align="center" src="images/3D.gif" />
                             </a>
                     </div>
-                    <p style="font-size: 22px;">Target Model: <a href="https://github.com/zhangyanyu0722/Carla_3D_Tracking">https://github.com/zhangyanyu0722/Carla_3D_Tracking</p>
                     <p style="font-size: 22px;"><i class="fab fa-github"></i> &nbsp; <a href="https://github.com/wuhanstudio/tracking-talk">Source Code</a></p>
 
                     <aside class="notes">
@@ -48,25 +47,25 @@
                 </section>
 
                 <section>
-                    <h4>Monocular 3D Object Detection</h4>
+                    <h4>Monocular 3D Object Tracking</h4>
                     <div class="r-hstack"  style="font-size: 18px;">
                         <div class="r-vstack">
                             <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/2d_bbox.gif"/>
-                            <p>4 DoF - (x, y) (w, h)</p>
+                            <p>Step 1: 2D Object Detection (FRCNN)</p>
                         </div>
                         <div class="r-vstack">
-                            <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="140%">
-                            <p>MonoGRNet 2020 <a href="https://arxiv.org/pdf/1811.10247.pdf">[PDF]</a></p>
+                            <a href="https://arxiv.org/pdf/1811.10247.pdf"><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="140%"></a>
+                            <p>Step 2: 2D Bounding Boxes to 3D Bounding Boxes</p>
                         </div>
                         <div class="r-vstack">
                             <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/3d_bbox_vehicle.gif"/>
-                            <p>7 DoF - (x, y, z) (w, h, l) and local yaw</p>
+                            <p>Step 3: Motion Tracking</p>
                         </div>
                     </div>
                     <div class="r-vstack" style="font-size: 20px;">
-                        <p>We assume roll=0, pitch=0 for vehicles.</p>
                         <ul>
                             <br />
+                            <li class="fragment">We do not use Lidar Data (No depth information)</li>
                             <li class="fragment">Not easy to label 3D bounding boxes by human. (No training set)</li>
                             <!-- <li class="fragment">How can we get global coordinates from local coordinates?</li> -->
                         </ul>
@@ -74,12 +73,11 @@
                 </section>
 
                 <section>
-                    <h1 class="r-fit-text">Problem 1: How can we generate 3D Bounding Boxes?</h1>
+                    <h1 class="r-fit-text">Step 2.1: How can we generate 3D Bounding Boxes?</h1>
                     <p style="font-size: 24px;">(Ground Truth / Training set)</p>
                 </section>
 
                 <section>
-                    <h4 class="r-fit-text">How can we generate 3D Bounding Boxes? (Ground Truth / Training set)</h4>
                     <p style="font-size: 22px;">Method 1: Detouring - Extract rendering resources from Commercial Games (Direct3D 11)</p>
                     <div style="font-size: 20px;">
                         <div class="r-hstack">
@@ -98,9 +96,8 @@
                 </section>
 
                 <section>
-                    <h4 class="r-fit-text">How can we generate 3D Bounding Boxes? (Ground Truth / Training set)</h4>
                     <div style="font-size: 20px;">
-                        <p style="font-size: 22px;">Method 2: Develop a Game for Simulation (Unity3D)</p>
+                        <p style="font-size: 22px;">Method 2: Develop a Simlator using Game Engine (Unity3D)</p>
                         <div class="r-vstack">
                             <img src="images/virtual-kitti.png" width="50%" style="margin-bottom: 0;"/>
                             <p>Virtual KITTI 2016 (Unity3D) <a href="https://europe.naverlabs.com/blog/announcing-virtual-kitti-2/">[URL]</a></p>
@@ -113,9 +110,8 @@
                 </section>
 
                 <section>
-                    <h4 class="r-fit-text">How can we generate 3D Bounding Boxes? (Ground Truth / Training set)</h4>
                     <div style="font-size: 20px;">
-                        <p style="font-size: 22px;">Method 2: Develop a Game for Simulation (Unreal)</p>
+                        <p style="font-size: 22px;">Method 2: Develop a Simlator using Game Engine (Unreal)</p>
                         <div class="r-hstack"  style="font-size: 18px;">
                             <div class="r-vstack">
                                 <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/2d_bbox.gif"/>
@@ -131,7 +127,7 @@
                 </section>
 
                 <section>
-                    <h1 class="r-fit-text">Problem 2: From 3D global coordinates to 2D image coordinates</h1>
+                    <h1 class="r-fit-text">Step 2.2: From 3D global coordinates to 2D image coordinates</h1>
                     <p style="font-size: 24px;">(Ground Truth / Training set)</p>
                     <div class="r-hstack">
                         <img src="images/carla-data.png"/>
@@ -271,7 +267,7 @@
                         </section>
 
                 <section>
-                    <h1 class="r-fit-text">Problem 3: From 2D Bounding Boxes to 3D Bounding Boxes</h1>
+                    <h1 class="r-fit-text">Step 2.3: From 2D Bounding Boxes to 3D Bounding Boxes</h1>
                     <p style="font-size: 24px;">(2D Bounding Boxes --&gt; 3D Bounding Boxes --&gt; 3D Global Coordinates)</p>
                 </section>
 
@@ -280,7 +276,7 @@
                     <div class="r-hstack"  style="font-size: 18px;">
                         <div class="r-vstack">
                             <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="60%">
-                            <p>MonoGRNet 2020 <a href="https://arxiv.org/pdf/1811.10247.pdf">[PDF]</a></p>
+                            <p>3D Bounding Box Estimation Using Deep Learning and Geometry <a href="https://arxiv.org/abs/1612.00496">[PDF]</a><a href="https://github.com/skhadem/3D-BoundingBox">[Code]</a></p>
                         </div>
                     </div>
                     <h5>From 3D Bounding Boxes to 3D Global Coordinates</h5>
@@ -291,7 +287,7 @@
                 </section>
 
                 <section>
-                    <h1 class="r-fit-text">Problem 4: How can we do multi-object tracking?</h1>
+                    <h4>Step 3: Multi-Object Motion Tracking</h4>
                     <p style="font-size: 24px;">(Monocular 3D Object Tracking)</p>
 
                     <div class="r-hstack">
@@ -305,7 +301,7 @@
                 </section>
 
                 <section>
-                    <h1 class="r-fit-text">Problem 5: How can we generate UAPs?</h1>
+                    <h4>Step 4: Universal Adversarial Perturbation</h4>
                     <p style="font-size: 24px;">(Adversarial Attacks)</p>
                 </section>
 
