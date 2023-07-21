@@ -33,12 +33,7 @@
                     <h3 class="r-fit-text">Adversarial Tracking: Attacking 3D Multi-Object Tracking in Real Time</h3>
                     <p class="name" style="font-size: 25px;">Han Wu, Dr. Johan Wahlström and Dr. Sareh Rowlands</p>
                     <div class="r-hstack">
-                            <a href="https://github.com/zhangyanyu0722/Carla_3D_Tracking">
-                              <img align="center" src="images/2D.gif" />
-                            </a>
-                            <a href="https://github.com/zhangyanyu0722/Carla_3D_Tracking">
-                              <img align="center" src="images/3D.gif" />
-                            </a>
+                        <img align="center" src="images/carla-detection.gif" />
                     </div>
                     <p style="font-size: 22px;"><i class="fab fa-github"></i> &nbsp; <a href="https://github.com/wuhanstudio/tracking-talk">Source Code</a></p>
 
@@ -50,16 +45,20 @@
                     <h4>Monocular 3D Object Tracking</h4>
                     <div class="r-hstack"  style="font-size: 18px;">
                         <div class="r-vstack">
-                            <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/2d_bbox.gif"/>
+                            <img src="images/gta5-data.png"/>
+                            <p>Step 0: The Ground Truth (Training Set)</p>
+                        </div>
+                        <div class="r-vstack">
+                            <img src="images/2d.png"/>
                             <p>Step 1: 2D Object Detection (FRCNN)</p>
                         </div>
                         <div class="r-vstack">
-                            <a href="https://arxiv.org/pdf/1811.10247.pdf"><img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="140%"></a>
-                            <p>Step 2: 2D Bounding Boxes to 3D Bounding Boxes</p>
+                            <img src="images/3d.png"></a>
+                            <p>Step 2: 3D Object Detection (Orientation)</p>
                         </div>
                         <div class="r-vstack">
-                            <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/3d_bbox_vehicle.gif"/>
-                            <p>Step 3: Motion Tracking</p>
+                            <img src="images/tracking.png"/>
+                            <p>Step 3: Motion Tracking (LSTM + GPS / IMU)</p>
                         </div>
                     </div>
                     <div class="r-vstack" style="font-size: 20px;">
@@ -73,7 +72,7 @@
                 </section>
 
                 <section>
-                    <h1 class="r-fit-text">Step 2.1: How can we generate 3D Bounding Boxes?</h1>
+                    <h1 class="r-fit-text">Step 0: How can we generate 3D Bounding Boxes?</h1>
                     <p style="font-size: 24px;">(Ground Truth / Training set)</p>
                 </section>
 
@@ -111,7 +110,7 @@
 
                 <section>
                     <div style="font-size: 20px;">
-                        <p style="font-size: 22px;">Method 2: Develop a Simlator using Game Engine (Unreal)</p>
+                        <p style="font-size: 22px;">Method 3: Develop a Simlator using Game Engine (Unreal)</p>
                         <div class="r-hstack"  style="font-size: 18px;">
                             <div class="r-vstack">
                                 <img src="https://carla.readthedocs.io/en/latest/img/tuto_G_bounding_box/2d_bbox.gif"/>
@@ -127,7 +126,7 @@
                 </section>
 
                 <section>
-                    <h1 class="r-fit-text">Step 2.2: From 3D global coordinates to 2D image coordinates</h1>
+                    <h1 class="r-fit-text">Step 0: From 3D global coordinates to 2D image coordinates</h1>
                     <p style="font-size: 24px;">(Ground Truth / Training set)</p>
                     <div class="r-hstack">
                         <img src="images/carla-data.png"/>
@@ -267,21 +266,25 @@
                         </section>
 
                 <section>
-                    <h1 class="r-fit-text">Step 2.3: From 2D Bounding Boxes to 3D Bounding Boxes</h1>
-                    <p style="font-size: 24px;">(2D Bounding Boxes --&gt; 3D Bounding Boxes --&gt; 3D Global Coordinates)</p>
+                    <h4>Step 1: 2D Object Detection</h4>
+                    <p style="font-size: 24px;">(YOLO / Faster RCNN / SSD)</p>
                 </section>
-
+        
                 <section>
-                    <h5>From 2D Bounding Boxes to 3D Bounding Boxes</h5>
+                    <h5>Step 2: 3D Object Detection</h5>
+                    <p style="font-size: 24px;">(2D Bounding Boxes --&gt; 3D Bounding Boxes --&gt; 3D Global Coordinates)</p>
+                    <hr />
+                    <h6 style="margin-bottom: 0;">From 2D Bounding Boxes to 3D Bounding Boxes</h6>
                     <div class="r-hstack"  style="font-size: 18px;">
                         <div class="r-vstack">
-                            <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="60%">
-                            <p>3D Bounding Box Estimation Using Deep Learning and Geometry <a href="https://arxiv.org/abs/1612.00496">[PDF]</a><a href="https://github.com/skhadem/3D-BoundingBox">[Code]</a></p>
+                            <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*itxXTGz3xfrko39gEL6Mkg.png" width="50%">
+                            <p style="margin-bottom: 0;">3D Bounding Box Estimation Using Deep Learning and Geometry <a href="https://arxiv.org/abs/1612.00496">[PDF]</a><a href="https://github.com/skhadem/3D-BoundingBox">[Code]</a></p>
                         </div>
                     </div>
-                    <h5>From 3D Bounding Boxes to 3D Global Coordinates</h5>
+                    <hr />
+                    <h6 style="margin-bottom: 0;">From 3D Bounding Boxes to 3D Global Coordinates</h6>
                     <div class="r-vstack" style="font-size: 20px;">
-                        <p>$O_{image}^{'} = M^{'}K[R|t] O_{world} = [u\ v\ z]^{T} = [\frac{u}{z}\ \frac{v}{z}\ 1]^{T} = [x\ y\ 1] \neq [u\ v\ z]^{T}$</p> 
+                        <p style="margin-bottom: 0;">$O_{image}^{'} = M^{'}K[R|t] O_{world} = [u\ v\ z]^{T} = [\frac{u}{z}\ \frac{v}{z}\ 1]^{T} = [x\ y\ 1] \neq [u\ v\ z]^{T}$</p> 
                         <p>The depth information is missing!</p> 
                     </div>
                 </section>
